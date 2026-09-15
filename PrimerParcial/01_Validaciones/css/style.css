@@ -62,4 +62,44 @@ footer{
     text-decoration: underline;
 }
 
+/* Reglas del registro*/
+
+/* 1. Regla general para el formulario de registro */
+.formulario-registro {
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+/* 2. Regla para el input del registro */
+.formulario-registro input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* 3. Regla para button del registro */
+.formulario-registro button {
+    background-color: #1f172a;
+    color: #ffffff;
+}
+
+/* 4. Regla para el hover del boton de registro */
+.formulario-registro button:hover {
+    background-color: #555555;
+}
+
+/* 5. Regla para cuando falle el registro */
+.error {
+    color: red;
+}
+
+/* 6. Regla para cuando un input sea invalido */
+input:invalid {
+    border: 2px solid red;
+}
+
+/* 7. Regla para cuando el registro sea exitoso */
+.mensaje-exito {
+    color: green;
+}
+
 

@@ -3,25 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Registrar Asistencia - CECyT 9</title>
-   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <header>
-    <a href="./detalle.html">Volver al Detalle del Taller</a>
-  </header>
+  <header> <a href="./detalle.html">Volver al Detalle del Taller</a> </header>
+
   <main> 
-    <form class="Formulario-Registro">
-      <h1>Formulario de registro de asistencia</h1>
+    <form class="formulario-registro" id="form-registro" novalidate>
+      <h1>Formulario de Registro de Asistencia</h1>
 
       <label for="nombre">Nombre Completo:</label>
       <input type="text" id="nombre" name="nombre" required>
+      <span class="error" id="error-nombre" ></span>
 
       <label for="boleta">Número de Boleta:</label>
       <input type="text" id="boleta" name="boleta" required>
+      <span class="error" id="error-boleta"></span>
+
+      <label for="fecha">Fecha de Registro (DD/MM/AAAA)</label>
+      <input type="text" id="fecha" name="fecha" placeholder="DD/MM/AAAA" required>
+      <span class="error" id="error-fecha"></span>
 
       <button type="submit">Registrar Asistencia</button>
+      <p class="mensaje-exito" id="mensaje-exito" ></p>
     </form>
   </main>
+  <script src="./js/validaciones.js"></script>
 
 </body>
 </html>
