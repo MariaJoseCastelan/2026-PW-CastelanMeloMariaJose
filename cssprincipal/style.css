@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+    color: #3D423C; 
+    background-color: #F5F7BD; 
+}
+
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+
+.header {
+    background-color: #3D423C; 
+    color: #F5F7BD; 
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 0.5rem; 
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+
+.content {
+    background-color: #DEDFC5;
+    padding: 1.5rem;
+    border: 1px solid #C8C9B5;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.content p {
+    margin: 0;
+}
+
+
+.tablas_ejercicios {
+    background-color: #DEDFC5;
+    padding: 1.5rem;
+    border: 1px solid #C8C9B5;
+    border-radius: 0.5rem;
+}
+
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #F5F7BD;
+    border-radius: 0.25rem;
+    overflow: hidden; /*Para que los bordes redondeados se apliquen bien*/
+}
+
+.tabla th, 
+.tabla td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #C8C9B5;
+}
+
+.tabla th {
+    background-color: #B2B39F; 
+    color: #3D423C;
+    font-weight: bold;
+}
+
+/* Quitar el borde inferior al último elemento para que se vea más limpio */
+.tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+.tabla a {
+    color: #3D423C;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.tabla a:hover {
+    text-decoration: underline;
+}
