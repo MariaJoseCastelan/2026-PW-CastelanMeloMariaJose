@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios con Node</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header>
+        <h1>Ejercicios con Node</h1>
+    </header>
+    <main>
+        <section class="ejercicio">
+            <h2 id="titulo-arreglos"> Arreglos del código <code>01-arreglos.js</code></h2>
+            <p>Datos de prueba con JS</p>
+            <div class="tabla-scroll">
+                <table id="tabla-talleres">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Instructor</th>
+                            <th>Cupo</th>
+                            <th>Inscritos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <form id="form-arreglos" class="formulario">
+                <div class="campos">
+                    <label for="operacion-arreglo" name="operacion-arreglo">
+                        <select name="operacion-arreglo" id="operacion-arreglo"></label>
+                            <option value="forEach">ForEach - Lista</option>
+                            <option value="map">map - Copia solo nombres</option>
+                            <option value="filter">filter - Filtrar talleres con cupo lleno</option>
+                            <option value="find">find - Buscar por el nombre del Instructor</option>
+                        </select>
+                </div>
+                <button type="submit">Ejecutar</button>
+            </form>
+            <output class="resultado" id="resultado-arreglo" for="form-arreglo"></output>
+        </section>
+    </main>
+    <script src="./Ejercicios/app.js"></script>
+</body>
+</html>
