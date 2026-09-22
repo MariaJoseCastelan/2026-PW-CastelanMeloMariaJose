@@ -9,6 +9,7 @@
 <body>
     <header>
         <h1>Ejercicios con Node</h1>
+        <a href="../../index.html">Volver al Portafolio</a>
     </header>
     <main>
         <section class="ejercicio">
@@ -25,6 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
                     </tbody>
                 </table>
             </div>
@@ -32,12 +34,15 @@
             <form id="form-arreglos" class="formulario">
                 <div class="campos">
                     <label for="operacion-arreglo" name="operacion-arreglo">
-                        <select name="operacion-arreglo" id="operacion-arreglo"></label>
+                        <select name="operacion-arreglo" id="operacion-arreglo">
                             <option value="forEach">ForEach - Lista</option>
                             <option value="map">map - Copia solo nombres</option>
                             <option value="filter">filter - Filtrar talleres con cupo lleno</option>
                             <option value="find">find - Buscar por el nombre del Instructor</option>
+                            <option value="reduce">reduce - Suma de inscritos de los talleres</option>
+                            <option value="filtermap">filter + map - Nombres de talleres con cupo disponible</option>
                         </select>
+                    </label>
                 </div>
                 <button type="submit">Ejecutar</button>
             </form>

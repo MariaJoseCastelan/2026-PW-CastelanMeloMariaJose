@@ -5,8 +5,8 @@
 body {
     margin: 0;
     font-family: system-ui, Arial, sans-serif;
-    color: #3D423C; 
-    background-color: #F5F7BD; 
+    color: #17191D; 
+    background-color: #F5F0E6; 
 }
 
 
@@ -18,8 +18,8 @@ body {
 
 
 .header {
-    background-color: #3D423C; 
-    color: #F5F7BD; 
+    background-color: #17191D; 
+    color: #D4BCC8; 
     padding: 1.5rem;
     text-align: center;
     border-radius: 0.5rem; 
@@ -33,9 +33,9 @@ body {
 
 
 .content {
-    background-color: #DEDFC5;
+    background-color: #D4BCC8;
     padding: 1.5rem;
-    border: 1px solid #C8C9B5;
+    border: 1px solid #17191D;
     border-radius: 0.5rem;
     margin-bottom: 1.5rem;
     line-height: 1.6;
@@ -47,9 +47,9 @@ body {
 
 
 .tablas_ejercicios {
-    background-color: #DEDFC5;
+    background-color: #F5F0E6;
     padding: 1.5rem;
-    border: 1px solid #C8C9B5;
+    border: 1px solid #17191D;
     border-radius: 0.5rem;
 }
 
@@ -57,7 +57,7 @@ body {
 .tabla {
     width: 100%;
     border-collapse: collapse;
-    background-color: #F5F7BD;
+    background-color: #F5F0E6;
     border-radius: 0.25rem;
     overflow: hidden; /*Para que los bordes redondeados se apliquen bien*/
 }
@@ -66,12 +66,12 @@ body {
 .tabla td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #C8C9B5;
+    border-bottom: 1px solid #17191D;
 }
 
 .tabla th {
-    background-color: #B2B39F; 
-    color: #3D423C;
+    background-color: #D4BCC8; 
+    color: #17191D;
     font-weight: bold;
 }
 
@@ -82,7 +82,7 @@ body {
 
 
 .tabla a {
-    color: #3D423C;
+    color: #17191D;
     text-decoration: none;
     font-weight: bold;
 }

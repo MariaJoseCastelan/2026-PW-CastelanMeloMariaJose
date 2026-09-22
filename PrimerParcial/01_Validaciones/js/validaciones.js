@@ -3,7 +3,7 @@ Las validaciones de formulario son expresiones regulares, las cuales en este mom
 
 1.- Para el texto (nombre) 
 2.- Para el número de boleta (boleta)
-3.- Para la fecha (fecha
+3.- Para la fecha (fecha)
 
 Una expresion regular, es un patron donde se identifica que elementos seran validos vs cuales no, son reglas mediante las cuales realizamos la validacion de los datos ingresados por el usuario, en este caso, en un formulario. (Leer documentacion oficial de Mozzila).
 
