@@ -82,7 +82,8 @@ formObjeto.addEventListener('submit', (evento) => {
             resultado = JSON.stringify(Object.values(taller));
             break;
         case 'entries':
-            
+            //Mapea el campo y el valor del objeto taller para imprimir el campo y el valor, los une con un espacio.
+            resultado = Object.entries(taller).map(([campo, valor]) => `${campo}: ${valor}`).join('\n');
             break;
         case 'stringify':
             //jimmy
