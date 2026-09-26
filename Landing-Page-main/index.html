@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segunda Vuelta - Landing Page</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fuente de texto (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!--Aquí esta el header/menú de navegación -->
+    <header class="encabezado">
+    <div class="contenedor-encabezado">
+      
+      <!-- Logo del proyecto aquí -->
+      <div class="caja-logo">
+        <div class="icono-logo">
+          <!-- Aquí la imagen para el logo del proyecto -->
+        <!-- Alt describe la imagen por si la imagen no se carga, entonces el navegador mostrará el texto 'Ícono Segunda Vuelta'. -->
+          <img src="imagenes/IconoLogo.png" alt="Ícono Segunda Vuelta" class="imagen-icono-logo">
+        </div>
+        <span>Segunda Vuelta</span>
+      </div>
+
+      <!-- Enlaces de navegación para ir a las otras páginas -->
+      <nav class="navegacion-principal">
+        <a href="index.html" class="enlace-navegacion activo">Inicio</a>
+        <a href="nosotros.html" class="enlace-navegacion">Sobre Nosotros</a>
+        <a href="que-nos-destaca.html" class="enlace-navegacion">¿Qué nos destaca?</a>
+        <a href="index.html#contacto" class="enlace-navegacion">¿Cómo contactarnos?</a>
+      </nav>
+    </div>
+  </header>
+
+    <!-- Sección 1: Hero -->
+    <section class="seccion-principal">
+    <div class="contenedor-principal">
+      
+      <!-- Frase para describir el proyecto en una oración, tal vez podría ser el eslogan? -->
+      <div class="contenido-principal">
+        <h1 class="titulo-principal">
+        <!-- Span sirve como un contenedor en línea para agrupar fragmentos de texto o elementos pequeños y aplicarles estilos con CSS o manipularlos con JavaScript. Aquí, aisla la frase que le sigue para resaltarla y que no se pierda el flujo del texto antecesor. -->
+          Lo que ya no usas, <span class="resaltado-azul">alguien más lo necesita.</span>
+        </h1>
+        <p class="descripcion-principal">
+          Segunda Vuelta conecta familias para el intercambio y donación de ropa e insumos esenciales para bebés y adultos mayores — promoviendo la dignidad y confianza.
+        </p>
+
+        <!-- Este botón es para ir a la sección de "¿Cómo funciona?" que estará en esta misma página. Pongo solo esta porque creo que es la más relevante de todas.-->
+        <div class="acciones-principal">
+          <a href="#como-funciona" class="boton-sección1">¿Cómo funciona?</a>
+        </div>
+
+        <!-- Frases breves para describir la app -->
+        <div class="frases-principal">
+          <div class="elemento-frase1">
+            <span class="punto-descripción"></span> Entorno seguro y confiable
+          </div>
+          <div class="elemento-frase2">
+            <span class="punto-descripción"></span> Intercambio y donación de ropa e insumos
+          </div>
+          <div class="elemento-frase3">
+            <span class="punto-descripción"></span> Entregas en Puntos Seguros
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen que actuara como mockup -->
+      <div class="imagen-principal-caja">
+        <!-- Aquí la imagen del celular (no representa la app real) -->
+        <!-- Nota por si alguien lee el código: la hice con IA🥺🥺-->
+        <img src="imagenes/Mockup.jpg" alt="Vista de la app Segunda Vuelta" class="imagen-celular-placeholder">
+      </div>
+      
+    </div>
+  </section>
+
+    <!-- Sección 2: La problemática -->
+     <section class="seccion-problema">
+    <div class="contenedor">
+      <div class="etiqueta-seccion">EL PROBLEMA</div>
+      <h2 class="titulo-seccion">Muchos insumos esenciales se desperdician cada año</h2>
+      <p class="subtitulo-seccion">
+        Los bebés crecén rápido y los adultos mayores cambian de necesidades. Esto genera que muchos productos útiles vayan a la basura cuando podrían ayudar a otras familias.
+      </p>
+
+      <!-- 3 tarjetas de el problema -->
+      <div class="cuadricula-3-tarjetas">
+        
+        <div class="tarjeta-estatica">
+          <div class="caja-icono-tarjeta">
+            <!-- espacio para ícono de bebé -->
+            <img src="imagenes/bebe.png" alt="Ícono de bebé" class="icono-placeholder">
+          </div>
+          <h3>Bebés crecen antes de usar lo que tienen</h3>
+          <p>Un bebé puede pasar de talla en pocas semanas. Ropa casi nueva, cajas de pañales sin abrir y fórmula sin consumir quedan sin uso, representando gastos perdidos para la familia.</p>
+        </div>
+
+        <div class="tarjeta-estatica">
+          <div class="caja-icono-tarjeta">
+            <!-- espacio para ícono de adulto mayor -->
+            <img src="imagenes/abuelo.png" alt="Ícono adulto mayor" class="icono-placeholder">
+          </div>
+          <h3>Fallecimiento de adultos mayores</h3>
+          <p>Cuando un adulto mayor fallece, sus cuidadores se enfrentan a grandes cantidades de pañales y medicamentos que ya no se usarán, generando desperdicio y dolor adicional.</p>
+        </div>
+
+        <div class="tarjeta-estatica">
+          <div class="caja-icono-tarjeta">
+            <!-- espacio para ícono de desperdicio -->
+            <img src="imagenes/desperdicio.png" alt="Ícono desperdicio" class="icono-placeholder">
+          </div>
+          <h3>Desperdicio evitable</h3>
+          <p>Estos insumos siguen siendo funcionales y costosos. Tirarlos es un gasto doble económico para la familia que los compró.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+    <!-- Sección 3: La solución -->
+     <section class="seccion-solucion">
+    <div class="contenedor-solucion">
+      <!-- Columna Izquierda (Textos e Imagen) -->
+      <div class="columna-izquierda-solucion">
+        <div class="etiqueta-seccion etiqueta-clara">UNA SOLUCIÓN CIRCULAR</div>
+        <h2 class="titulo-solucion">Diseñada para la confianza y la seguridad</h2>
+        <p class="descripcion-solucion">
+          Segunda Vuelta cierra ese ciclo conectando familias que tienen de más con familias que lo necesitan, promoviendo dignidad.
+        </p>
+        
+        <div class="caja-imagen-solucion">
+          <!-- Espacio para una imagen -->
+          <img src="imagenes/familia.png" alt="Imagen" class="imagen-solucion-placeholder">
+        </div>
+      </div>
+
+      <!-- Columna Derecha (Tarjetas) -->
+      <div class="columna-derecha-solucion">
+        
+        <div class="tarjeta-solucion">
+          <div class="caja-icono-solucion">
+             <!-- Espacio icono verificación -->
+             <img src="imagenes/verificado.png" alt="Ícono verificado" class="icono-placeholder">
+          </div>
+          <div class="textos-tarjeta-solucion">
+            <h3>Perfiles verificados</h3>
+            <p>Los usuarios pasan por un proceso de verificación para garantizar que las publicaciones y los intercambios sean seguros y confiables.</p>
+          </div>
+        </div>
+
+        <div class="tarjeta-solucion">
+          <div class="caja-icono-solucion">
+             <!-- Espacio icono calendario -->
+             <img src="imagenes/calendario.png" alt="Ícono calendario" class="icono-placeholder">
+          </div>
+          <div class="textos-tarjeta-solucion">
+            <h3>Control de caducidad</h3>
+            <p>Los insumos como pañales o fórmula se publican con su fecha de caducidad visible, permitiendo a los receptores tomar decisiones informadas.</p>
+          </div>
+        </div>
+
+        <div class="tarjeta-solucion">
+          <div class="caja-icono-solucion">
+             <!-- Espacio icono ubicación -->
+             <img src="imagenes/ubicación.png" alt="Ícono ubicación" class="icono-placeholder">
+          </div>
+          <div class="textos-tarjeta-solucion">
+            <h3>Puntos de encuentro seguros</h3>
+            <p>Segunda Vuelta sugiere lugares públicos y concurridos para los intercambios, priorizando siempre la seguridad de las familias participantes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Sección 4: ¿Cómo funciona? -->
+     <section class="seccion-proceso" id="como-funciona">
+    <div class="contenedor">
+      <div class="etiqueta-seccion">EL PROCESO</div>
+      <h2 class="titulo-seccion">¿Cómo funciona Segunda Vuelta?</h2>
+
+      <div class="cuadricula-proceso">
+        <div class="tarjeta-proceso">
+          <div class="numero-paso">1</div>
+          <div class="caja-icono-proceso">
+            <!-- Espacio icono cámara -->
+            <img src="imagenes/camara.png" alt="Ícono cámara" class="icono-placeholder">
+          </div>
+          <h3>Publica/Busca</h3>
+          <p>Fotografía y sube el artículo que ya no necesitas o busca lo que requieres.</p>
+        </div>
+
+        <div class="flecha-proceso">→</div>
+        <div class="tarjeta-proceso">
+          <div class="numero-paso">2</div>
+          <div class="caja-icono-proceso">
+            <!-- Espacio icono manos -->
+            <img src="imagenes/acuerdo.png" alt="Ícono manos" class="icono-placeholder">
+          </div>
+          <h3>Conecta</h3>
+          <p>Recibe solicitudes de los productos que publicaste, o envia una sobre uno de tu ínteres.</p>
+        </div>
+
+        <div class="flecha-proceso">→</div>
+        <div class="tarjeta-proceso">
+          <div class="numero-paso">3</div>
+          <div class="caja-icono-proceso">
+            <!-- Espacio icono ubicación -->
+            <img src="imagenes/alfiler.png" alt="Ícono ubicación" class="icono-placeholder">
+          </div>
+          <h3>Entrega segura</h3>
+          <p>Encuentra un punto de encuentro seguro y realiza el intercambio/donación, ganando así reputación y confianza.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Sección 5: Pre-footer (aquí también existirá el enlace a 'Sobre Nosotros') -->
+     <section class="seccion-prefooter">
+    <div class="tarjeta-prefooter">
+      <div class="caja-icono-prefooter">
+        <!-- Espacio para un ícono-->
+        <img src="imagenes/corazon.png" alt="Ícono corazón" class="icono-placeholder">
+      </div>
+      <h2>Un proyecto para que insumos intimos circulen con dignidad y confianza</h2>
+      <p>Conoce la misión, visión y valores detrás de Segunda Vuelta.</p>
+      <a href="nosotros.html" class="boton-primario">Sobre Nosotros</a>
+    </div>
+  </section>
+
+    <!-- Sección 6: Footer -->
+     <footer class="pie-pagina">
+    <div class="contenedor-pie-pagina">
+      
+      <!-- Columna 1: Logo y descripción -->
+      <div class="columna-marca">
+        <div class="caja-logo logo-blanco">
+          <div class="icono-logo">
+            <!-- Ícono dell logo en footer -->
+            <img src="imagenes/IconoLogo.png" alt="Ícono Segunda Vuelta" class="imagen-icono-logo">
+          </div>
+          <span>Segunda Vuelta</span>
+        </div>
+        <p>Plataforma para el intercambio y donación de ropa e insumos esenciales.</p>
+      </div>
+
+      <!-- Columna 2: Equipo -->
+      <div class="columna-equipo">
+        <h4>Equipo</h4>
+        <p>Castelán Melo María José</p>
+        <p>Lizarde Linares Brandon</p>
+        <p>Mendoza Ceras Rodrigo</p>
+        <p>Pérez Flores Ángel Humberto</p>
+      </div>
+
+      <!-- Columna 3: Contacto -->
+      <div class="columna-contacto" id="contacto">
+        <h4>¿Cómo contactarnos?</h4>
+        <p class="item-contacto">ventiladorlabbd@gmail.com</p>
+      </div>
+    </div>
+
+    <!-- Barra inferior con links -->
+    <div class="barra-inferior-pie">
+      <p>© 2026 - Centro de Estudios Científicos y Tecnológicos Número 9 'Juan de Dios Bátiz'</p>
+      <div class="enlaces-inferiores">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Sobre Nosotros</a>
+        <a href="que-nos-destaca.html">¿Qué nos destaca?</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
