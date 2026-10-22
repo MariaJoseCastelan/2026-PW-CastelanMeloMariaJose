@@ -4,12 +4,16 @@
 
 //aqui va funcion de correo
 function validarCorreo(correo){
-
+    if(typeof correo !== 'string') return false;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(correo);
 }
+
 
 //aqui va funcion de boleta
 function validarBoleta(boleta){
-
+    if(typeof boleta !== 'string') return false;
+    return boleta.length === 8 && /^\d+$/.test(boleta);
 }
 
 
