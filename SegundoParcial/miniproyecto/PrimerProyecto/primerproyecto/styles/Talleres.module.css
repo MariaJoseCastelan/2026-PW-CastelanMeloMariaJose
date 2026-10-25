@@ -1,0 +1,66 @@
+/* CSS Module de las páginas /talleres, /talleres/[id] y /perfil.
+   Las clases se van agregando en los pasos 3 a 7 de la guía. */
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.panel {
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.panel > :first-child {
+  margin-top: 0;
+}
+
+.barra {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5e7eb;
+}
+
+.relleno {
+  height: 100%;
+  background: #6b1d3a;
+}
+
+.lleno {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.volver {
+  color: #6b1d3a;
+  font-weight: 600;
+}
+
+.exito {
+  color: #166534;
+  font-weight: 600;
+}
+
+.lista {
+  padding-left: 20px;
+}
+
+.lista li {
+  margin-bottom: 6px;
+}
+
+.lista a {
+  color: #6b1d3a;
+  font-weight: 600;
+}
+
+.buscador {
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}

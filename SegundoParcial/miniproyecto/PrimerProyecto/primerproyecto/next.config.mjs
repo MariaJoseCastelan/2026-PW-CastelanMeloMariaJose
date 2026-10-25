@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const MINI_SERVIDOR_URL = 'http://localhost:3306';
-const BACKEND_URL = 'http://localhost:3306';
+const BACKEND_URL = 'http://localhost:3001';
 
 const nextConfig = {
   reactStrictMode: true,
