@@ -25,7 +25,7 @@ export default function Perfil() {
     setError('');
     setBuscada('');
     const b = boleta.trim();
-    if (!validarBoleta(b)) return setError('La boleta debe tener 10 dígitos.');
+    if (!validarBoleta(b)) return setError('La boleta debe tener 10 dígitos y solo debe contener números.');
 
     setCargando(true);
     try {

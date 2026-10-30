@@ -4,7 +4,7 @@
 
 function validarCorreo(correo) {
   if (typeof correo !== 'string') return false;
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim());
+  return /^[A-Za-z0-9]+(?:\.[A-Za-z0-9]+)*@[A-Za-z0-9]+(?:\.[A-Za-z0-9]+)+$/.test(correo.trim());
 }
 
 function validarBoleta(boleta) {

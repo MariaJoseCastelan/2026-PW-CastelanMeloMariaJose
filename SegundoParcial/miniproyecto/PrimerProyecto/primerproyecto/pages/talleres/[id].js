@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { pedirJSON } from '../../lib/api';
 import { formatearFecha, ocultarBoleta } from '../../lib/formato';
-import { validarBoleta } from '../../lib/validaciones';
+import { normalizarNombre, validarBoleta, validarNombre } from '../../lib/validaciones';
 import estilos from '../../styles/Talleres.module.css';
 
 // /talleres/[id] — detalle de un taller.
@@ -63,14 +63,35 @@ export default function DetalleTaller() {
     const nombreLimpio = nombre.trim();
     const boletaLimpia = boleta.trim();
     if (!nombreLimpio) return setErrorForm('Escribe tu nombre.');
-    if (!validarBoleta(boletaLimpia)) return setErrorForm('La boleta debe tener 10 dígitos.');
-    if (asistencias.some((a) => a.boleta === boletaLimpia)) {
-      return setErrorForm('Esa boleta ya está inscrita en este taller.');
+    if (!validarNombre(nombreLimpio)) {
+      return setErrorForm('El nombre solo puede contener letras y espacios, y tener máximo 50 caracteres.');
     }
+    if (!validarBoleta(boletaLimpia)) return setErrorForm('La boleta debe tener 10 dígitos y solo deben ser números.');
     if (lleno) return setErrorForm('El taller ya no tiene lugares.');
 
     setEnviando(true);
     try {
+      const talleres = await pedirJSON('/talleres');
+      const listasAsistencias = await Promise.all(
+        talleres.map((t) => pedirJSON(`/talleres/${t.id}/asistencias`))
+      );
+      const asistenciasRegistradas = listasAsistencias.flat();
+      const boletaRegistrada = asistenciasRegistradas.some(
+        (asistencia) => asistencia.boleta === boletaLimpia
+      );
+      if (boletaRegistrada) {
+        return setErrorForm('Esta boleta ya está inscrita en un taller. Cada boleta solo puede inscribirse a un taller.');
+      }
+      const boletaDiferente = asistenciasRegistradas
+        .some(
+          (asistencia) =>
+            normalizarNombre(asistencia.nombre_alumno) === normalizarNombre(nombreLimpio) &&
+            asistencia.boleta !== boletaLimpia
+        );
+      if (boletaDiferente) {
+        return setErrorForm('Este nombre ya está asociado con otra boleta.');
+      }
+
       await pedirJSON('/asistencias', {
         method: 'POST',
         body: JSON.stringify({ taller_id: id, nombre_alumno: nombreLimpio, boleta: boletaLimpia }),
@@ -121,7 +142,12 @@ export default function DetalleTaller() {
        <section className={estilos.panel}>
         <h2>Inscribirme</h2>
         <form onSubmit={inscribir} className="formulario">
-          <input placeholder="Nombre completo" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+          <input
+            placeholder="Nombre completo"
+            value={nombre}
+            maxLength={50}
+            onChange={(e) => setNombre(e.target.value)}
+          />
           <input placeholder="Boleta (10 dígitos)" value={boleta} onChange={(e) => setBoleta(e.target.value)} />
           <button type="submit" disabled={lleno || enviando}>
             {lleno ? 'Sin lugares' : enviando ? 'Inscribiendo…' : 'Inscribirme'}
