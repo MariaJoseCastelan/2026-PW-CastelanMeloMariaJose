@@ -83,27 +83,65 @@ function crearApp(config, pool) {
 
   // 403: "sé quién eres, pero no tienes permiso".
   function requiereRol(rol) {
-    // Paso 3 (en clase)
-    return pendiente(3);
+    return (req, res, next) => {
+      if (req.session.usuario.rol !== rol) {
+        return res.json({error: `403. Eres ${req.session.usuario.rol}, pero esta ruta es solo para ${rol}`});
+      }
+      next();
+    };
   }
+
 
   // ---------- Rutas ----------
 
-  app.get('/api/config', (req, res) => res.json(config));
-
+  app.get('/api/config', (req, res) => res.config);
+  //vamos a crear una ruta para un perfil visitante y obtener su sesión a partir de una cookie.
   // Guarda un contador en la sesión. Sirve para ver que la sesión existe antes de entrar
   // (y para la demostración de fijación de sesión).
   app.post('/api/visita', (req, res) => {
-    if (!req.session) return pendiente(1)(req, res);
+    if (!req.session) return res.json({error: 'No tiene una sesión asociada'});
     req.session.visitas = (req.session.visitas || 0) + 1;
     res.json({ visitas: req.session.visitas, sesion: idCorto(req.sessionID) });
   });
 
   // Paso 2 (en clase): iniciar sesión. Paso 7 (en clase): regenerar el id al entrar.
-  app.post('/api/login', pendiente(2));
+  app.post('/api/login', async (req, res, next) => {
+    try{
+      const {usuario, contrasena} = req.body || {};
+      const datos = await usuarios.verificar(usuario, contrasena);
+      if(!datos) return res.status(401).json({error: 'Usuario o contraseña incorrecto'});
+
+      //debemos de crear la sesión
+      const antes = req.session.visitas !== undefined ? idCorto(req.sessionID) : null;
+      const visitas = req.session.visitas || 0;
+      //que vamos a guardar
+      const guardar = () => {
+        req.session.usuario = datos;
+        req.session.visitas = visitas;
+        req.session.ultimoUso = Date.now();
+        req.session.save((error) => {
+          if(error) return next(error);
+          res.json({usuario : datos, sesionAntes : antes, sesionDespues : idCorto(req.sessionID)});
+        });
+      };
+      if(config.regenerarAlEntrar){
+        //vamos a regenerar la sesión
+        req.session.regenerate((error) =>  (error ? next(error) : guardar()));
+      }else{
+        guardar();
+      }
+    }catch(error){
+      next(error);
+    }
+  });
 
   // Paso 2 (en clase): cerrar sesión.
-  app.post('/api/logout', pendiente(2));
+  app.post('/api/logout', (req, res, next) => {
+    req.session.destroy((error) => {
+     res.clearCookie(NOMBRE_COOKIE);
+     res.json({mensaje : 'Sesión cerrada'});
+    });
+  });
 
   app.get('/api/sesion', requiereSesion, (req, res) => {
     const desde = config.rolling ? req.session.ultimoUso : req.session.creada;
@@ -119,12 +157,14 @@ function crearApp(config, pool) {
     res.json({ mensaje: `Hola, ${req.session.usuario.nombre}`, rol: req.session.usuario.rol, visitas: req.session.visitas });
   });
 
+ 
   app.get('/api/admin/reporte', requiereSesion, requiereRol('admin'), (req, res) => {
     res.json({ reporte: 'Talleres: 3 · Inscritos: 57 · Cupo libre: 18' });
   });
 
   // SOLO PARA LA CLASE: muestra lo que el servidor guarda de cada sesión.
   // Un servidor real NUNCA expone esto.
+  //para verificar que la sesion tiene un comportamiento adecuado es necesario realizar una prueba unitaria al código
   app.get('/api/diagnostico/sesiones', async (req, res, next) => {
     try {
       const sesiones = await todasLasSesiones(almacen);
@@ -134,7 +174,7 @@ function crearApp(config, pool) {
         usuario: s.usuario ? s.usuario.usuario : '(sin iniciar sesión)',
         visitas: s.visitas || 0,
         expira: s.cookie && s.cookie.expires,
-      }));
+      })); 
       res.json({ almacen: config.almacen, sesiones: lista });
     } catch (error) {
       next(error);
@@ -154,3 +194,6 @@ function crearApp(config, pool) {
 }
 
 module.exports = { crearApp, NOMBRE_COOKIE };
+
+//primera tarea : Deberán desarrollar una infografía sobre el uso de jwt para el inicio de sesion para el dia Domingo 15 de Noviembre
+//segunda tarea : Deberán de desarrollar la implementación del codigo para realizar la autenticacion y pruebas de sesiones conforme al documento para el archivo (demo.js)
