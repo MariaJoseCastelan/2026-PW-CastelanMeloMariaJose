@@ -38,14 +38,15 @@ function crearApp(config, pool) {
   // Paso 1 (en clase): configurar express-session aquí, ANTES de las rutas.
   app.use(session({
     name: NOMBRE_COOKIE,
+    store: almacen, // donde se guardan las sesiones (MySQL o memoria, según config.almacen)
     //aqui tenemos que definir si es secreta, si es publica o como es su acceso
     secret: process.env.SESSION_SECRET || 'secreto-solo-para-mi',
     resave: false,
     saveUninitialized: false,
     rolling: config.rolling,
     cookie: {
-      maxAge: config.maxAge || 1000 * 60 * 60 * 24, // 1 día
-      httpOnly: config.httpOnly || true,
+      maxAge: config.maxAgeMs || 1000 * 60 * 60 * 24, // 1 día
+      httpOnly: config.httpOnly !== false,
       sameSite: config.sameSite || 'lax',
       secure: config.secure || false,
     }
@@ -61,21 +62,21 @@ function crearApp(config, pool) {
 
   // Paso 5 (en clase): función vencida(sesion).
 
-  function vencida(idSesion) {
+  function vencida(sesion) {
     const desde = config.rolling ? sesion.ultimoUso : sesion.creada;
-    return Date.now() - desde > config.maxAge;
+    return Date.now() - desde > config.maxAgeMs;
   }
 
   // 401: "no sé quién eres" (no hay sesión o ya venció).
   function requiereSesion(req, res, next) {
     if(req.session.usuario && vencida(req.session)) {
       return req.session.destroy(() =>{
-        res.clearExpiredCookie(NOMBRE_COOKIE);
-        res.status(401).json({ error: '401 · Tu sesión se vencio, vuelve a iniciar sesión' });
+        res.clearCookie(NOMBRE_COOKIE);
+        res.status(401).json({ error: '401 · Tu sesión venció: vuelve a iniciar sesión' });
       });
     }
     if (!req.session.usuario) {
-      return res.status(401).json({ error: '401 · No has inciado sesión con tu usuario' });
+      return res.status(401).json({ error: '401 · No has iniciado sesión (o tu sesión ya venció)' });
     }
     req.session.ultimoUso = Date.now();
     next();
@@ -85,7 +86,7 @@ function crearApp(config, pool) {
   function requiereRol(rol) {
     return (req, res, next) => {
       if (req.session.usuario.rol !== rol) {
-        return res.json({error: `403. Eres ${req.session.usuario.rol}, pero esta ruta es solo para ${rol}`});
+        return res.status(403).json({error: `403 · Eres ${req.session.usuario.usuario}, pero esta ruta es solo para ${rol}`});
       }
       next();
     };
@@ -94,7 +95,7 @@ function crearApp(config, pool) {
 
   // ---------- Rutas ----------
 
-  app.get('/api/config', (req, res) => res.config);
+  app.get('/api/config', (req, res) => res.json(config));
   //vamos a crear una ruta para un perfil visitante y obtener su sesión a partir de una cookie.
   // Guarda un contador en la sesión. Sirve para ver que la sesión existe antes de entrar
   // (y para la demostración de fijación de sesión).
@@ -109,7 +110,7 @@ function crearApp(config, pool) {
     try{
       const {usuario, contrasena} = req.body || {};
       const datos = await usuarios.verificar(usuario, contrasena);
-      if(!datos) return res.status(401).json({error: 'Usuario o contraseña incorrecto'});
+      if(!datos) return res.status(401).json({error: 'Usuario o contraseña incorrectos'});
 
       //debemos de crear la sesión
       const antes = req.session.visitas !== undefined ? idCorto(req.sessionID) : null;
@@ -118,6 +119,7 @@ function crearApp(config, pool) {
       const guardar = () => {
         req.session.usuario = datos;
         req.session.visitas = visitas;
+        req.session.creada = Date.now();
         req.session.ultimoUso = Date.now();
         req.session.save((error) => {
           if(error) return next(error);
@@ -139,7 +141,7 @@ function crearApp(config, pool) {
   app.post('/api/logout', (req, res, next) => {
     req.session.destroy((error) => {
      res.clearCookie(NOMBRE_COOKIE);
-     res.json({mensaje : 'Sesión cerrada'});
+     res.json({mensaje : 'Sesión cerrada: el servidor la borró'});
     });
   });
 
