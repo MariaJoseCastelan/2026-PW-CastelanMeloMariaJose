@@ -5,6 +5,10 @@ const express = require('express');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const { crearModeloUsuarios } = require('./modelos/usuarios.modelo');
+const {config} = require('dotenv');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const {crearModeloTokens} = require('./modelos/tokens.modelo');
 
 const NOMBRE_COOKIE = 'connect.sid';
 
@@ -192,6 +196,97 @@ function crearApp(config, pool) {
     res.status(500).json({ error: 'Error del servidor' });
   });
 
+  //jwt
+
+  const SECRETO_JWT = config.jwtSecreto || process.env.JWT_SECRET || 'secreto-jwt-solo-para-esta-demo';
+
+  //tenemos que crear un token por usuario  + los datos correspondientes + el vencimiento de dicho token + la firma
+  //token se guarda en env y nunca se envia; la clave solo se calcula. Nunca se comparte
+  function firmarToken(usuario){
+    return jwt.sign(
+      { sub: String(usuario.id), usuario: usuario.usuario, nombre: usuario.nombre, rol: usuario.rol},
+      SECRETO_JWT,
+      { algorithm: 'HS256', expiresIn: config.jwtExpiraSeg, jwtid: crypto.randomUUID() }
+    );
+
+  }
+
+  //vamos con el middleware
+  async function requiereJWT(req, res, next){
+    const encabezado = req.headers.authorization || '';
+    if(!encabezado.startsWith('Bearer ')){
+      return res.status(401).json({error: '401. Falta el token'});
+    }
+    const token = encabezado.slice('Bearer '.length);
+
+    let datos;
+    try{
+      datos = jwt.verify(token, SECRETO_JWT, {algorithms: ['HS256']});
+
+    }catch(error){
+      if(error.name === 'TokenExpiredError'){
+        return res.status(401).json({error: '401. Token expirado, por favor renuevelo'});
+      }
+      return res.status(401).json({error: '401. Token inválido'});
+    }
+
+    try{
+      if(config.jwtRevocar && (await tokes.estaRevocado(datos.jti))){
+        return res.status(401).json({error: '401. Token revocado y ya se cerro la sesión'})
+      }
+    }catch(error){
+      return next(error);
+    }
+    req.jwt = datos;
+    next();
+  
+
+
+  function requiereRolJWT(rol){
+    return (req, res, next) => {
+      if(req.jwt.rol !== rol){
+        return res.status(403).json({error : `403. Eres ${req.jwt.usuario}, pero esta ruta le pertenece a ${rol}`});
+      }
+    }
+  }
+}
+
+//esto ya es para implementatlo en las rutas
+app.post('/api/jwt/login', async (req, res, next) => {
+  try{
+    const {usuario, contrasena} = req. body || {};
+    const datos = await usuarios.verificar(usuario, contrasena);
+    if(!datos) return res.status(401).json({error: 'Usuario o contraseña incorrectos'});
+    res.json({token : firmarToken(datos), usuario : datos});
+  }catch(error){
+    next(error);
+  }
+
+  app.get('/api/jwt/perfil', requiereJWT, (req, res) => {
+    res.json({mensaje : `Hola ${req.jwt.nombre}`, rol : req.jwt.rol, expiraEnSegundos : Math.max(0, req.jwt.exp - Math.round(Date.now()/1000))});
+    });
+
+  app.get('/api/jwt/admin/reporte', requiereJWT, requiereRolJWT('admin'), (req, res) => {
+    res.json({reporte : 'Talleres: 3'});
+  });
+
+  app.post('/api/jwt/logout', requiereJWT, async (req, res, next) => {
+    try{
+      if(config.jwtRevocar){
+        await tokens.revocar(req.jwt.jti, req.jwt.usuario, req.jwt.exp);
+        res.json({mensaje : 'Token revocado se agrega a la lista negra', revocado : true});
+      }
+      res.json({mensaje: 'El servidor no guarda nada', revocado :false});
+    }catch (error){
+      next(error);
+    }
+  });
+});
+
+
+
+
+
   return app;
 }
 
@@ -199,3 +294,5 @@ module.exports = { crearApp, NOMBRE_COOKIE };
 
 //primera tarea : Deberán desarrollar una infografía sobre el uso de jwt para el inicio de sesion para el dia Domingo 15 de Noviembre
 //segunda tarea : Deberán de desarrollar la implementación del codigo para realizar la autenticacion y pruebas de sesiones conforme al documento para el archivo (demo.js)
+
+//como evitar suplantar identidad y como evitar que un token sea reutilizado, para ello vamos a generar una lista negra de tokens revocados, y cuando se haga una petición con un token revocado, el servidor va a rechazar la petición.
